@@ -36,4 +36,33 @@ router.post("/register", async(request, response) => {
         response.status(500).json({message: error.message});
     }
 })
+
+//Let's define login.
+router.post("/login", async(request, response)=>{
+    try {
+        const {email, password} = request.body;
+        
+        let user = await User.findOne({email: email}); //lets controll email adress.
+        if(user == null){
+            response.status(403).json({message: "This user does not Exists !"});
+        }
+        //After finding user, lets check password.
+        else{
+            if(user.password != password){
+                response.status(403).json({message: "Credentials does not Matching !"});
+            }
+            //After confirming all of those credentials, we are generating token here.
+            else{
+                const token = jwt.sign({},secretKey,Options);
+                let model = {token: token, user: user};
+
+                response.json(model);
+            }
+        }
+
+    } 
+    catch (error) {
+        response.status(500).json({message: error.message}); //This line appears when there is error in api request.
+    }
+})
 module.exports = router;

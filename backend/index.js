@@ -7,6 +7,7 @@ app.use(express.json()); //With this line, we are telling that whole request wil
 app.use(cors())//we are making, every website allowed to reach.
 
 const authRouter = require("./routers/auth.router")
+//With these line, we dont need to make configurations after adding new api, since it accepts all those apis with this line.
 app.use("/api/auth",authRouter)
 /* Lets Check API request.
 app.get("",(request, response) => {
