@@ -1,10 +1,14 @@
-import { bootstrapApplication, BrowserModule } from '@angular/platform-browser';
-import { AppComponent } from './app/app.component';
 import { importProvidersFrom } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
+import { bootstrapApplication, BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { AppComponent } from './app/app.component';
 import { routes } from './app/app.routes';
+import { ToastrModule } from 'ngx-toastr';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 //These are the essentials that we are planing to use on out project with standalone.
 bootstrapApplication(AppComponent, {
@@ -13,6 +17,12 @@ bootstrapApplication(AppComponent, {
     importProvidersFrom(
       BrowserModule,
       CommonModule,
+      BrowserAnimationsModule,
+      NgxSpinnerModule,
+      ToastrModule.forRoot({
+        closeButton: true,
+        progressBar: true,
+      }),
       RouterModule.forRoot(routes)
     )
   ]

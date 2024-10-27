@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { ValidDirective } from '../directives/valid.directive';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
@@ -10,14 +12,17 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    ValidDirective,
+    
   ],
 
   //we need to use export to access.
   exports:[
     CommonModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    ValidDirective,
   ]
 
 })
