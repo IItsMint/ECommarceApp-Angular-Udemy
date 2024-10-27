@@ -8,13 +8,14 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class GenericHttpService {
   //with this service, we are going to make every api request connected to here.
+  //tahnks to this file, we are gonna write reduced code lines in services and we ar manage error messages in a single window.
   api: string="http://localhost:5001/api";
   constructor(private _http: HttpClient, private _toastr: ToastrService,private _spinner: NgxSpinnerService) { }
   
   //first we need the rest of the api url,
   //to make it more generic, instead of any, we used T element.
   //auth/register
-  post<T>(api: string, model:T, callBack: (response:T)=> void){
+  post<T>(api: string, model:any, callBack: (response:T)=> void){
     this._spinner.show();
     this._http.post <T>(`${this.api}/${api}`,model,{}).subscribe({
       next:(response:T) => {callBack(response);this._spinner.hide();},

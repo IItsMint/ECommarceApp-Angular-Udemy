@@ -3,6 +3,9 @@ import { SharedModule } from '../../common/shared/shared.module';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { AuthService } from './services/auth.service';
+import { LoginModel } from './models/login.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,18 +15,22 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  constructor(private _toastr: ToastrService, private _spinner: NgxSpinnerService){
-
-    this._spinner.show();
-
-    setTimeout(() => {
-      this._spinner.hide();
-    }, 5000);
-  }
+constructor(
+  private _auth: AuthService,private _toastr: ToastrService,private _router: Router
+){}
 
 login(form:NgForm){
   if(form.valid){
-    console.log(form.value); // we implemented this to see values in console log.
+    let model = new LoginModel();
+    model.email = form.controls["email"].value;
+    model.password = form.controls["password"].value;
+
+    this._auth.login(model, response => {
+      this._toastr.success("Successfully logged on...");
+      localStorage.setItem("token",response.token);
+      localStorage.setItem("user", JSON.stringify(response.user));
+      this._router.navigateByUrl("/");
+    })
   }
 }
 }
