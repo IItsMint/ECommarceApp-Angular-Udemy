@@ -4,13 +4,13 @@ export const routes: Routes = [
     //Lets define login.
     {
         path:"login",
-        loadComponent: ()=> import("./components/login/login.component").then(c => c.LoginComponent)
+        loadComponent: ()=> import("./components/auth/components/login/login.component").then(c => c.LoginComponent)
     },
 
     //Lets degine sign up.
     {
         path:"register",
-        loadComponent: ()=> import("./components/register/register.component").then(c => c.RegisterComponent)
+        loadComponent: ()=> import("./components/auth/components/register/register.component").then(c => c.RegisterComponent)
     },
 
     {

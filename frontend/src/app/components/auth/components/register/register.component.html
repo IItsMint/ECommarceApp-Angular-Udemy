@@ -8,7 +8,7 @@
                 <form autocomplete="off" #registerForm="ngForm" (ngSubmit)="register(registerForm)">
                     <div class="form-group">
                         <label for="name">Name & Surname:</label>
-                        <input type="text" class="form-control" ngModel name="name" id="name" #name [appValid]="name.validity.valid" required minlength="3">
+                        <input type="text" class="form-control" [(ngModel)]="model.name" name="name" id="name" #name [appValid]="name.validity.valid" required minlength="3">
                         <div class="invalid-feedback">
                             Please provide at least 3 chracters...
                         </div>
@@ -16,7 +16,7 @@
             
                     <div class="form-group mt-2">
                         <label for="email">E-mail Adress:</label>
-                        <input type="email" class="form-control" ngModel name="email" id="email" #email [appValid]="email.validity.valid" required minlength="3">
+                        <input type="email" class="form-control" [(ngModel)]="model.email" name="email" id="email" #email [appValid]="email.validity.valid" required minlength="3">
                         <div class="invalid-feedback">
                             Please provide a valid email adress...
                         </div>
@@ -24,7 +24,7 @@
             
                     <div class="form-group mt-2">
                         <label for="password">Password:</label>
-                        <input type="password" class="form-control" ngModel name="password" id="password" #password [appValid]="password.validity.valid" required>
+                        <input type="password" class="form-control" [(ngModel)]="model.password" name="password" id="password" #password [appValid]="password.validity.valid" required>
                         <div class="invalid-feedback">
                             Password section cannot have a null value...
                         </div>
