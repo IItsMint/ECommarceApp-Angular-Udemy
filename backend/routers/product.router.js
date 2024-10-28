@@ -44,3 +44,46 @@ router.post("/deleteById", async (req, res) => {
         res.json({message: "The Product successfully deleted..."});
     });
 });
+
+//Let's implement bring product list, hence we don't wantto search among all of those items. 
+//User can need only items that is listed on the specific pages, not other items in other categories.
+//so we used pagination.
+router.post("/", async(req, res) => {
+    response(res, async()=> {
+        const {pageNumber, pageSize, search} = req.body;
+
+        //let's implement, bring all those items that includes this part.
+        let productCount = await Product.find({
+            $or:[
+                {
+                    name: {$regex: search, $options: 'i'} //options i is ignoring upper-lowercase typos.
+                }
+            ]
+        }).count();
+        //this is the listing part
+        let products = await Product
+        .find({
+            $or:[
+                {
+                    name: {$regex: search, $options: 'i'} //options i is ignoring upper-lowercase typos.
+                }
+            ]
+        }).sort({name:1}) //1 is for smaller to bigger, -1 is for bigger to smaller
+        .populate("categories")
+        .skip((pageNumber -1)*pageSize) //we are reducing 1 hence, page number usually starts from the 1 not 0.
+        .limit(pageSize);
+
+        let totalPageCount = Math.ceil(productCount / pageSize);
+        let mpdel ={
+            data: products,
+            pageNumber: pageNumber,
+            pageSize: pageSize,
+            totalPageCount: totalPageCount,
+            isFirstPage: pageNumber == 1 ? true : false,
+            isLastPage: totalPageCount == pageNumber ? true : false,
+        };
+
+        res.json(model);
+
+    });
+});
