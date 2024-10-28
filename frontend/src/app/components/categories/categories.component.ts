@@ -5,11 +5,13 @@ import { CategoryModel } from './models/category.model';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from './services/category.service';
 import { NgForm } from '@angular/forms';
+import { SwalService } from '../../common/services/swal.service';
+import { CategoryPipe } from './pipes/category.pipe';
 
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [SharedModule],
+  imports: [SharedModule, CategoryPipe],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.css'
 })
@@ -18,8 +20,9 @@ export class CategoriesComponent implements OnInit {
 
 categories: CategoryModel[] = [];
 updateCategory: CategoryModel = new CategoryModel();
+search: string="";
 
-constructor(private _toastr: ToastrService, private _category: CategoryService){
+constructor(private _toastr: ToastrService, private _category: CategoryService, private _swal:SwalService){
 
 }
   ngOnInit(): void {
@@ -58,4 +61,13 @@ update(form:NgForm){
     })
   }
 }
+
+  deleteById(model: CategoryModel){
+    this._swal.callSwal(`Are you sure you want to remove this? ${model.name} `, "","Delete",()=>{
+      this._category.deleteById(model._id, response => {
+        this._toastr.info(response.message);
+        this.getAll();
+      })
+    });
+  }
 }

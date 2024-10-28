@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ValidDirective } from '../directives/valid.directive';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { BlankComponent } from '../components/blank/blank.component';
+import { TableComponent } from '../components/table/table.component';
 
 
 
@@ -14,7 +16,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     FormsModule,
     RouterModule,
     ValidDirective,
-    
+    BlankComponent,
+    TableComponent
   ],
 
   //we need to use export to access.
@@ -23,6 +26,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     FormsModule,
     RouterModule,
     ValidDirective,
+    BlankComponent,
+    TableComponent
   ]
 
 })
