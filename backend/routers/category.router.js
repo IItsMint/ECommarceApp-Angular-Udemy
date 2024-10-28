@@ -3,8 +3,12 @@ const router = express.Router();
 const Category = require("../models/category");
 const {v4:uuidv4} = require("uuid");
 
+const response = require("../services/response.service");
+
+//to make code shorter, we used response(), since it is method, it is different than refferance response inside of the brackets.
+
 router.post("/add", async (request, response) => {
-    try {
+    response (res, async()=>{
         const{name} = request.body;
 
         const checkName = await Category.findOne({name:name});
@@ -21,27 +25,20 @@ router.post("/add", async (request, response) => {
             await category.save();
             response.json({message: "Data Succesfully Registred..."});
         }
-
-    } 
-    catch (error) {
-        response.status(500).json({message: error.message});
-    }
+    })
 })
 
 router.post("/DeleteById", async(request, response)=>{
-    try {
+    response(res, async() => {
         const{_id} = request.body;
 
         await Category.findByIdAndDelete(_id);
         response.json({message: "Data embarked on a journey into the void..."});
-    } 
-    catch (error) {
-        response.status(500).json({message: error.message});
-    }
+    });
 })
 
 router.post("/update", async(request, response)=>{
-    try {
+    response(res, async() => {
         const{_id, name} = request.body;
         const category = await Category.findOne({_id:_id}); //we need to first find the category.
 
@@ -57,22 +54,14 @@ router.post("/update", async(request, response)=>{
                 response.json({message: "Data Successfuly Updated..."});
             }
         }
-
-
-    } 
-    catch (error) {
-        response.status(500).json({message: error.message});
-    }
-})
+    });
+});
 
 router.get("/", async(request, response)=>{
-    try {
+    response(res, async() => {
         const categories = await Category.find().sort({name: 1}); //List all of the data according to their first letter.
         response.json(categories);
-    } 
-    catch (error) {
-        response.status(500).json({message: error.message});
-    }
-})
+    });
+});
 
 module.exports = router;//we need this so that this code can get out its folder.
