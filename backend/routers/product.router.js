@@ -7,10 +7,10 @@ const upload = require("../services/file.service");
 const router = express.Router();
 const response = require("../services/response.service");
 
-//Lets design adding product method.
+//Let's design adding product method.
 router.post("/add", upload.array("images"),async(req, res) => {
     response(res, async ()=>{
-        const {name, stock,price, cateories} = req.body;
+        const {name, stock,price, categories} = req.body;
 
         const productId = uuidv4();
         let product = new Product({
@@ -26,5 +26,21 @@ router.post("/add", upload.array("images"),async(req, res) => {
         await product.save();
 
         res.json({message: "Succesfully added the Item!"});
+    });
+});
+
+//Let's design deleting products.
+router.post("/deleteById", async (req, res) => {
+    response(res, async() => {
+        const {_id} = req.body;
+
+        const product = await Product.findById(_id);
+        //we need to delete it's pictures' as well. Hence, we need to find it first.
+        for(const image of product.imageUrls){
+            fs.unlink(image.path, ()=> {});
+        }
+
+        await Product.findByIdAndDelete(_id);
+        res.json({message: "The Product successfully deleted..."});
     });
 });
