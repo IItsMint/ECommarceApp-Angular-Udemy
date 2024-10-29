@@ -91,8 +91,7 @@ router.post("/changeActiveStatus", async (req, res) => {
         const { _id } = req.body;
         let product = await Product.findById(_id);
         product.isActive = !product.isActive;
-        var result =await Product.findByIdAndUpdate(_id, product);
-        console.log(result);
+        await Product.findByIdAndUpdate(_id, product);
         res.json({ message: "Status of the product successfully changed..." });
     });
 });
@@ -109,13 +108,13 @@ router.post("/getById", async (req, res) => {
 // Let's implement Update method.
 router.post("/update", upload.array("images"), async (req, res) => {
     response(res, async () => {
-        const { _id, name, stock, price, categories } = req.body;
+        const { _id, name, stock, price, categories} = req.body;
         let product = await Product.findById(_id);
 
         // Remove old images
-        for (const image of product.imageUrls) {
-            fs.unlink(image.path, () => { });
-        }
+        // for (const image of product.imageUrls) {
+        //     fs.unlink(image.path, () => { });
+        // }
 
         // Update product details
         let imageUrls = [...product.imageUrls, ...req.files];
@@ -124,7 +123,7 @@ router.post("/update", upload.array("images"), async (req, res) => {
             stock: stock,
             price: price,
             imageUrls: imageUrls,
-            categories: categories
+            categories: categories,
         };
 
         await Product.findByIdAndUpdate(_id, product);

@@ -1,0 +1,69 @@
+<app-blank title="Update the Product" section title="Update the Product">
+    <div class="row-center">
+        <div class="col-md-6">
+            <form #updateForm="ngForm" autocomplete="off" (ngSubmit)="update(updateForm)">
+                <div class="form-group">
+                    <label for="name">Product Name</label>
+                    <input type="text" name="name" id="name" [(ngModel)]="product.name" required #name minlength="3" class="form-control"
+                        [appValid]="name.validity.valid">
+                    <div class="invalid-feedback">
+                        Product name must be at least 3 characters!
+                    </div>
+                </div>
+
+                <label for="categories">Categories</label>
+                
+                <select class="form-control" name="categoriesSelect" id="categoriesSelect" [(ngModel)]="product.categories" multiple
+                    #categoriesSelect>
+                    <option *ngFor="let category of categories" [value]="category._id">
+                        {{category.name}}
+                    </option>
+                </select>
+
+                <div class="form-group mt-2">
+                    <label for="stock">Stock Number</label>
+                    <input type="number" name="stock" id="stock" [(ngModel)]="product.stock" required #stock min="1" class="form-control"
+                        [appValid]="stock.validity.valid">
+                    <div class="invalid-feedback">
+                        Product stock number must be at least 1!
+                    </div>
+                </div>
+
+                <div class="form-group mt-2">
+                    <label for="price">Price</label>
+                    <input type="number" name="price" id="price" [(ngModel)]="product.price" required #price min="1" class="form-control"
+                        [appValid]="price.validity.valid">
+                    <div class="invalid-feedback">
+                        Product price must be at least 1!
+                    </div>
+                </div>
+
+                <div class="form-group mt-2">
+                    <label for="images">Images</label>
+                    <input type="file" name="images" id="images" ngModel multiple class="form-control"
+                        (change)="getImages($event)">
+                </div>
+
+                <hr>
+
+                <div class="form-group mt-2">
+                    <p>Uploaded Images</p>
+                    <span (click)="deleteImage(product._id, i)"
+                        *ngFor="let image of product.imageUrls; let i = index">
+
+                        <!-- <img src="{{image.imageUrl}}" width="100" class="mx-1"> -->
+                        <img [src]=" 'http://localhost:5001/' + image.path" width="100" class="mx-1">
+                    </span>
+                </div>
+
+
+                <div class="form-group mt-2">
+                    <button class="btn btn-warning w-100">
+                        Update
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</app-blank>

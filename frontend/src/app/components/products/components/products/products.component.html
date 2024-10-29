@@ -30,11 +30,11 @@
             <td>
                 <!-- In here we can use check box as well, i wanted to try slider, even checkbox delete label part -->
                 <div class="form-check form-switch">
-                    <input class="form-check-input" (change)="changeProductStatus(product._id)" type="checkbox" [checked]="product.isActive" id="flexSwitchCheckChecked">
+                    <input class="form-check-input" (change)="changeProductStatus(product._id)" type="checkbox" [checked]="product.isActive">
                 </div>
             </td>
             <td>
-                <button class="btn btn-outline-warning btn-sm" title="Update">
+                <button routerLink="/products/update/{{product._id}}" class="btn btn-outline-warning btn-sm" title="Update">
                     <i class="fa fa-edit"></i>
                 </button>
 

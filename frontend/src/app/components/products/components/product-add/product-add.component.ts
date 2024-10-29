@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedModule } from '../../../../../common/shared/shared.module';
-import { CategoryModel } from '../../../../categories/models/category.model';
+import { SharedModule } from '../../../../common/shared/shared.module';
+import { CategoryModel } from '../../../categories/models/category.model';
 import { NgForm } from '@angular/forms';
-import { CategoryService } from '../../../../categories/services/category.service';
+import { CategoryService } from '../../../categories/services/category.service';
 import { ToastrService } from 'ngx-toastr';
-import { ProductService } from '../../../services/product.service';
+import { ProductService } from '../../services/product.service';
 import { Router } from '@angular/router';
 
 @Component({
