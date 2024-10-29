@@ -91,7 +91,8 @@ router.post("/changeActiveStatus", async (req, res) => {
         const { _id } = req.body;
         let product = await Product.findById(_id);
         product.isActive = !product.isActive;
-        await Product.findByIdAndUpdate(_id, product);
+        var result =await Product.findByIdAndUpdate(_id, product);
+        console.log(result);
         res.json({ message: "Status of the product successfully changed..." });
     });
 });

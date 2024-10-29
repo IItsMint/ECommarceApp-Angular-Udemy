@@ -30,7 +30,7 @@
             <td>
                 <!-- In here we can use check box as well, i wanted to try slider, even checkbox delete label part -->
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                    <input class="form-check-input" (change)="changeProductStatus(product._id)" type="checkbox" [checked]="product.isActive" id="flexSwitchCheckChecked">
                 </div>
             </td>
             <td>
@@ -38,7 +38,7 @@
                     <i class="fa fa-edit"></i>
                 </button>
 
-                <button class="btn btn-outline-danger btn-sm mx-1" title="Delete">
+                <button (click)="DeleteById(product._id)" class="btn btn-outline-danger btn-sm mx-1" title="Delete">
                     <i class="fa fa-trash"></i>
                 </button>
             </td>

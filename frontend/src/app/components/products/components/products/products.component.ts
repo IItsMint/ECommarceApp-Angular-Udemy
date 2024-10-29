@@ -57,4 +57,23 @@ export class ProductsComponent implements OnInit {
     };
   };
 
+  DeleteById(id: string){
+    this._swal.callSwal("Are you certain you want to delete this product?", "Permanently Delete Product?","Delete",() => {
+      let model = {_id: id};
+      this._product.deleteById(model, res => {
+        this._toastr.info(res.message);
+        this.getAll(this.request.pageNumber);
+      });
+    });
+  }
+
+  changeProductStatus(id: string){
+    let model = {_id: id};
+    this._product.changeActiveStatus(model, res => {
+      this._toastr.info(res.message);
+    
+    });
+  }
+
+
 };
