@@ -1,0 +1,12 @@
+<app-blank title="Products" sectionTitle="List of Products">
+    <app-table [heads]='["#","Product Image","Product Name", "Categories","Stock","Price","Listing Date","Active/Passive","Operations"]'>
+        <tr *ngFor="let product of result.data let index = index">
+            <td>{{index+1}}</td>
+            <td>
+                <img [src]="'http://localhost:5001/' + product.imageUrls[0].path" width="50">
+            </td>
+            <td>{{product.name}}</td>
+            <td></td>
+        </tr>
+    </app-table>
+</app-blank>

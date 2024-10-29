@@ -74,7 +74,7 @@ router.post("/", async(req, res) => {
         .limit(pageSize);
 
         let totalPageCount = Math.ceil(productCount / pageSize);
-        let mpdel ={
+        let model ={
             data: products,
             pageNumber: pageNumber,
             pageSize: pageSize,
@@ -87,3 +87,70 @@ router.post("/", async(req, res) => {
 
     });
 });
+
+//Let's implement status of the products,
+router.post("/changeActiveStatus", async(req, res) => {
+    response(res, async() => {
+        const {_id} = req.body;
+        let product = await Product.findById(_id);
+        product.isActive = !product.isActive;
+        await Product.findByIdAndUpdate(_id, product);
+        res.json({message: "Status of the product succesfully changed..."});
+    });
+});
+
+//let's impelment bring product by id.
+router.post("/getById", async(req, res) => {
+    response(res, async()=>{
+        const {_id} = req.body;
+        let product = await Product.findById(_id);
+        res.json(product);
+    });
+});
+
+//Let's impelment Update method, however, we need to delete the iamges and upload them again.
+router.post("/update", upload.array("images"), async(req, res) => {
+    response(res, async() => {
+        const {_id, name, stock, price, categories} = req.body; //we get all the related info here,
+        //with these group, we unlink, remove the images,
+        let product = await Product.findById(_id);
+        for(const image of product.imageUrls){
+            fs.unlink(image.path, () => {});
+        }
+        //we are emereging the list again with the new images.
+        let imageUrls;
+        imageUrls = [...product.imageUrls, ...req.files]
+        product = {
+            name: name.toUpperCase(),
+            stock: stock,
+            price: price,
+            imageUrls: imageUrls,
+            categories: categories
+        };
+        //these group finishes the update method.
+        await Product.findByIdAndUpdate(_id, product);
+        res.json({message: "Succesfully Updated !"});
+    });
+})
+
+//Let's implement delete image,
+router.post("/removeImageByProductIdAndIndex", async(req, res) => {
+    response(res, async() => {
+        const {_id, index} = req.body;
+        
+        let product = await Product.findById(_id);
+        if(product.imageUrls.length == 1){
+            res.status(400).json({message: "At least one image must be posted per product ! Unauthorized to delete..."});
+        }
+
+        else{
+            let image = product.imageUrls[index];//lets find the selected image first,
+            product.imageUrls.splice(index,1);
+            await Product.findByIdAndUpdate(_id, product);
+            fs.unlink(image.path, () => {});
+            res.json({message: "Successfully removed the image...."});
+        }
+    });
+});
+
+module.exports = router; //lets share product router.
