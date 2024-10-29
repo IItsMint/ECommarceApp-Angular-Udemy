@@ -1,0 +1,67 @@
+<app-blank title="Add Products" section title="Add Products">
+    <div class="row-center">
+        <div class="col-md-6">
+            <form #addForm="ngForm" autocomplete="off" (ngSubmit)="add(addForm)">
+                <div class="form-group">
+                    <label for="name">Product Name</label>
+                    <input type="text" name="name" id="name" ngModel required #name minlength="3" class="form-control"
+                        [appValid]="name.validity.valid">
+                    <div class="invalid-feedback">
+                        Product name must be at least 3 characters!
+                    </div>
+                </div>
+
+                <label for="categories">Categories</label>
+                <!-- select might be section not sure????? -->
+                <select class="form-control" name="categoriesSelect" id="categoriesSelect" ngModel multiple
+                    #categoriesSelect>
+                    <option *ngFor="let category of categories" [value]="category._id">
+                        {{category.name}}
+                    </option>
+                </select>
+
+                <div class="form-group mt-2">
+                    <label for="stock">Stock Number</label>
+                    <input type="number" name="stock" id="stock" ngModel required #stock min="1" class="form-control"
+                        [appValid]="stock.validity.valid">
+                    <div class="invalid-feedback">
+                        Product stock number must be at least 1!
+                    </div>
+                </div>
+
+                <div class="form-group mt-2">
+                    <label for="price">Price</label>
+                    <input type="number" name="price" id="price" ngModel required #price min="1" class="form-control"
+                        [appValid]="price.validity.valid">
+                    <div class="invalid-feedback">
+                        Product price must be at least 1!
+                    </div>
+                </div>
+
+                <div class="form-group mt-2">
+                    <label for="images">Images</label>
+                    <input type="file" name="images" id="images" ngModel multiple class="form-control"
+                        (change)="getImages($event)">
+                </div>
+
+                <hr>
+
+                <div class="form-group mt-2">
+                    <p>Selected Images</p>
+                    <span (click)="removeImage(image.name, image.size, i)"
+                        *ngFor="let image of imageUrls; let i = index">
+                        <img src="{{image.imageUrl}}" width="100" class="mx-1">
+                    </span>
+                </div>
+
+
+                <div class="form-group mt-2">
+                    <button class="btn btn-primary w-100">
+                        Save
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</app-blank>
