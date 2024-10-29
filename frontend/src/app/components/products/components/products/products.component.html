@@ -1,4 +1,15 @@
 <app-blank title="Products" sectionTitle="List of Products">
+    <!-- addition and search -->
+    <div class="form-group">
+        <button class="btn btn-outline-primary" routerLink="/">
+            <i class="fa fa-plus"></i>
+        </button>
+        <div class="col-md-4" style="float: right;">
+            <input class="form-control" type="search" [(ngModel)]="request.search" placeholder="Find your favorite items..." (keyup)="search()" (search)="getAll(1)">
+        </div>
+    </div>
+
+    <!-- List -->
     <app-table [heads]='["#","Product Image","Product Name", "Categories","Stock","Price","Listing Date","Active/Passive","Operations"]'>
         <tr *ngFor="let product of result.data let index = index">
             <td>{{index+1}}</td>
@@ -6,7 +17,66 @@
                 <img [src]="'http://localhost:5001/' + product.imageUrls[0].path" width="50">
             </td>
             <td>{{product.name}}</td>
-            <td></td>
+            <td>
+                <ul>
+                    <li *ngFor="let category of product.categories">
+                        {{category.name}}
+                    </li>
+                </ul>
+            </td>
+            <td>{{product.stock}}</td>
+            <td>{{product.price}}</td>
+            <td>{{product.createdDate | date: 'dd.MM.yyyy HH:mm:ss'}}</td>
+            <td>
+                <!-- In here we can use check box as well, i wanted to try slider, even checkbox delete label part -->
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                </div>
+            </td>
+            <td>
+                <button class="btn btn-outline-warning btn-sm" title="Update">
+                    <i class="fa fa-edit"></i>
+                </button>
+
+                <button class="btn btn-outline-danger btn-sm mx-1" title="Delete">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </td>
         </tr>
     </app-table>
+
+    <!-- After table we need pagination structure below it. But we can write selector for page size -->
+    <select name="pageSize" id="pageSize" class="form-control text-center" [(ngModel)]="request.pageSize" style="width: 65px; float: left;">
+        <option>5</option>
+        <option>10</option>
+        <option>20</option>
+        <option>50</option>
+        <option>100</option>
+    </select>
+
+    <!-- Pagination -->
+     <nav style="float: right;">
+        <ul class="pagination">
+            <li class="page-item" [ngClass]="result.isFirstPage ? 'disabled' : '' ">
+                <a class="page-link" (click)="getAll(1)">First</a>
+            </li>
+
+            <li class="page-item" [ngClass]="result.isFirstPage ? 'disabled' : '' ">
+                <a class="page-link" (click)="getAll(request.pageNumber -1)">Previous</a>
+            </li>
+
+            <li class="page-item" *ngFor="let p of pageNumbers">
+                <a class="page-link" [ngClass]="result.pageNumber == p ? 'active': '' " (click)="getAll(p)">{{p}}</a>
+            </li>
+
+            <li class="page-item" [ngClass]="result.isLastPage ? 'disabled' : '' ">
+                <a class="page-link" (click)="getAll(request.pageNumber +1)">Next</a>
+            </li>
+
+            <li class="page-item" [ngClass]="result.isLastPage ? 'disabled' : '' ">
+                <a class="page-link" (click)="getAll(result.totalPageCount)">Last</a>
+            </li>
+        </ul>
+     </nav>
+     
 </app-blank>
