@@ -1,0 +1,28 @@
+/* We need to use css for the left side of the home page. */
+
+.outline{
+    padding: 0px;
+    border-left: 0px;
+}
+
+ul li{
+    list-style: none;
+    padding: 10px;
+    padding-left: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px; /*  adds rounded corners */
+    cursor: pointer;
+}
+
+.active {
+    background-color: #A2C3E0; /* Azzurro Vincennes Color */
+    color: #2C2C2C; /* Dark Gray for contrast */
+    padding: 10px 15px; /* Adjust padding as needed */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+}
+
+/* Optional hover effect for added interaction */
+.active:hover {
+    background-color: #8DB2C1; /* Slightly darker shade for hover effect */
+    color: #FFFFFF; /* Change text color on hover */
+}

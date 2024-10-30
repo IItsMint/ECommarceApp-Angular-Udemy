@@ -1,3 +1,61 @@
 <app-blank title="Home Page" sectionTitle="Products">
+    <div class="row">
+        <!-- Left Sidebar for Category List -->
+        <div class="col-md-2 outline">
+            <ul>
+                <li (click)="changeCategory('Show All')" [ngClass]="request.categoryName == 'Show All' ? 'active': '' ">
+                    Show All
+                </li>
 
+                <li (click)="changeCategory(category.name)" [ngClass]="request.categoryName == category.name ? 'active': '' " *ngFor="let category of categories">
+                    {{category.name}}
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content Section -->
+        <div class="col-md-10">
+            <div class="form-group">
+                <!-- Search and Filter Bar -->
+                <div class="row">
+                    <!-- Center Search Bar -->
+                    <div class="col-md-8">
+                        <input [(ngModel)]="request.search" type="search" class="form-control" placeholder="Find your favorite items...">
+                    </div>
+
+                    <!-- Right-aligned Filter Dropdown -->
+                    <div class="col-md-3">
+                        <select [(ngModel)]="request.priceFilter" class="form-control">
+                            <option value="0">Sort By...</option>
+                            <option value="1">Price: Low to High</option>
+                            <option value="2">Price: High to Low</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-primary">
+                            All
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-md-4">
+                    <div class="card text-center">
+                        <div class="card-header">
+                            <h1>Tomatoes</h1>
+                        </div>
+                        <div class="card-body">
+                            <img src="https://cdn.yemek.com/mnresize/1250/833/uploads/2023/06/domates-kac-kalori-shutter-4.jpg" alt="" width="300" height="200">
+                            <p class="mt-1"> <strong>Left:100</strong></p>
+                            <hr>
+                            <h4 class="alert alert-danger">Price: 100 ₺</h4>
+                            <button class="btn btn-outline-dark w-100 mt-2">Add to Shopping Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </app-blank>
