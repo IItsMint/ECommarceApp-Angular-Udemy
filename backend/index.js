@@ -15,12 +15,14 @@ const authRouter = require("./routers/auth.router");
 const categoryRouter = require("./routers/category.router");
 const productRouter = require("./routers/product.router"); //we need to share api methods of the products
 const cartRouter = require("./routers/shoppingCart.router");
+const orderRouter = require("./routers/order.router");
 
 //With these line, we dont need to make configurations after adding new api, since it accepts all those apis with this line.
 app.use("/api/auth",authRouter);
 app.use("/api/categories",categoryRouter);
 app.use("/api/products", productRouter);
 app.use("/api/carts", cartRouter);
+app.use("/api/orders", orderRouter);
 
 
 /* Lets Check API request.

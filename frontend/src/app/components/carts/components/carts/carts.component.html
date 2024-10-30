@@ -21,7 +21,7 @@
         </div>
         <div class="col-md-3 mt-2 custom-border">
             <h3 class="alert alert-success mt-2 price-text">Total: {{sum + ' ₺'}}</h3>
-            <button *ngIf="carts.length > 0" class="btn checkout-btn w-100 ">Check Out</button>
+            <button (click)="createOrder()" *ngIf="carts.length > 0" class="btn checkout-btn w-100 ">Check Out</button>
             
             <div class="coupon-section mt-3">
                 <input type="text" placeholder="Enter coupon code" class="form-control" id="couponCode" />

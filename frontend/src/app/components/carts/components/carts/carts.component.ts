@@ -4,6 +4,7 @@ import { CartModel } from '../../models/cart.model';
 import { CartService } from '../../services/cart.service';
 import { ToastrService } from 'ngx-toastr';
 import { SwalService } from '../../../../common/services/swal.service';
+import { OrderService } from '../../../orders/services/order.service';
 
 @Component({
   selector: 'app-carts',
@@ -25,7 +26,7 @@ export class CartsComponent implements OnInit {
     "SAVE20": 20 // Example valid coupon for 20% discount
   };
 
-  constructor(private _cart: CartService, private _toastr: ToastrService, private _swal: SwalService) {}
+  constructor(private _cart: CartService, private _toastr: ToastrService, private _swal: SwalService, private _order: OrderService) {}
 
   ngOnInit(): void {
     this.getAll(); // Fetch the cart items
@@ -80,4 +81,17 @@ export class CartsComponent implements OnInit {
     // Clear the input field
     (document.getElementById('couponCode') as HTMLInputElement).value = '';
   }
+
+  createOrder(){
+    this._swal.callSwal("Proceed to complete your purchase?", "Confirm Purchase", "confirm", () => {
+      this._order.create(res => {
+        this._toastr.success(res.message);
+        this.getAll();
+      });
+    });
+    
+  }
+
+
+
 }
