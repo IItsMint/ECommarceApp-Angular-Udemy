@@ -39,6 +39,9 @@ export const routes: Routes = [
             {
                 path:"categories",
                 loadComponent: ()=>import("./components/categories/categories.component").then(c =>c.CategoriesComponent)
+            },            {
+                path:"carts",
+                loadComponent: ()=>import("./components/carts/components/carts/carts.component").then(c =>c.CartsComponent)
             }
         ]
     }

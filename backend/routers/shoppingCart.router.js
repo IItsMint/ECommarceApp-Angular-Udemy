@@ -34,11 +34,12 @@ router.post("/removeById", async(req, res) => {
 
         let cart = await Cart.findById(_id);
 
-        let product = await Product.findById(productId);
+        let product = await Product.findById(cart.productId);
         product.stock += cart.quantity;
-        await Product.findByIdAndUpdate(productId, product);
+        await Product.findByIdAndUpdate(cart.productId, product);
 
         await Cart.findByIdAndDelete(_id);
+        res.json({message: "Succefully removed the item."})
     });
 });
 
