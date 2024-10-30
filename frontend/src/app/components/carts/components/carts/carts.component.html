@@ -2,21 +2,15 @@
     <div class="row">
         <div class="col-md-9">
             <app-table [heads]='["#","Product Images","Product Name", "Quantity","Quantity Price","Total", "Operations"]'>
-                <tr *ngFor="let cart of carts let index = index">
-                    <td>{{index+1}}</td>
+                <tr *ngFor="let cart of carts; let index = index">
+                    <td>{{index + 1}}</td>
                     <td>
                         <img [src]="'http://localhost:5001/' + cart?.products[0]?.imageUrls[0]?.path" width="50">
                     </td>
                     <td>{{cart?.products[0]?.name}}</td>
-
                     <td>{{cart.quantity}}</td>
-
-
                     <td>{{cart.price + '₺'}}</td>
-                    <td>{{+(cart.price * (cart.quantity)).toFixed(2) + '₺' }}</td>
-
-                    
-
+                    <td>{{+(cart.price * cart.quantity).toFixed(2) + '₺' }}</td>
                     <td>
                         <button (click)="DeleteById(cart._id)" class="btn btn-outline-danger btn-sm mx-1" title="Delete">
                             <i class="fa fa-trash"></i>
@@ -25,8 +19,18 @@
                 </tr>
             </app-table>
         </div>
-        <div class="col-md-3">
-
+        <div class="col-md-3 mt-2 custom-border">
+            <h3 class="alert alert-success mt-2 price-text">Total: {{sum + ' ₺'}}</h3>
+            <button *ngIf="carts.length > 0" class="btn checkout-btn w-100 ">Check Out</button>
+            
+            <div class="coupon-section mt-3">
+                <input type="text" placeholder="Enter coupon code" class="form-control" id="couponCode" />
+                <button *ngIf="carts.length > 0" class="btn custom-coupon-btn w-100 mt-2" (click)="applyCoupon()">Apply Coupon</button>
+                
+                <div *ngIf="appliedCoupon" class="mt-2 text-success">Coupon Applied: {{appliedCoupon}}</div>
+                <div *ngIf="errorMessage" class="mt-2 text-danger">{{errorMessage}}</div>
+            </div>
+            
         </div>
     </div>
 </app-blank>

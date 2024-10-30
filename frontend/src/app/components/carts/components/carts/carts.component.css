@@ -1,0 +1,34 @@
+/* Apply Coupon Button */
+.custom-coupon-btn {
+    background-color: #5C8CFF; /* Soft Ferrari Blue */
+    color: #fff; /* White text */
+    border: none; /* Remove border */
+}
+
+.custom-coupon-btn:hover {
+    background-color: #4A7EDD; /* Darker shade on hover */
+}
+
+/* Price Text Color */
+.price-text {
+    color: #000; /* Black color for the price text */
+    font-weight: bold; /* Make the text bold for emphasis */
+}
+
+/* Check Out Button */
+.checkout-btn {
+    background-color: #28A745; /* Emerald Green */
+    color: #fff; /* White text */
+    border: none; /* Remove border */
+}
+
+.checkout-btn:hover {
+    background-color: #218838; /* Darker shade on hover */
+}
+
+/* Custom Border Style */
+.custom-border {
+    border: 2px solid #333; /* Dark gray border */
+    padding: 15px; /* Add some padding */
+    border-radius: 5px; /* Slightly round the corners */
+}
