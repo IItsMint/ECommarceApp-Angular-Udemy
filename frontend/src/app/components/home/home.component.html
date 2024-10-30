@@ -50,7 +50,7 @@
                             <p class="mt-1"> <strong>Left:{{product.stock}}</strong></p>
                             <hr>
                             <h4 class="alert alert-danger">Price: {{product.price}} ₺</h4>
-                            <button *ngIf="product.stock > 0" class="btn btn-outline-dark w-100 mt-2">Add to Shopping Cart</button>
+                            <button (click)="addCart(product._id, product.price)" *ngIf="product.stock > 0" class="btn btn-outline-dark w-100 mt-2">Add to Shopping Cart</button>
                         </div>
                     </div>
                 </div>
