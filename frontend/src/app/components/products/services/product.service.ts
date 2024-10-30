@@ -39,4 +39,17 @@ export class ProductService {
   removeImageByProductIdAndIndex(model: any, callBack:(res: MessageResponseModel) => void){
     this._http.post<MessageResponseModel>("products/removeImageByProductIdAndIndex", model, res => callBack(res));
   }
+
+  /* with pagination edit this.
+
+  getAll(model: RequestModel, callBack:(res: PaginationResultModel<ProductModel[]>) => void){
+    this._http.post<PaginationResultModel<ProductModel[]>>("products/", model, res => callBack(res)); // link mgiht be become /update.
+  }
+  */
+ 
+  getAllForHomePage(model: RequestModel, callBack:(res: ProductModel[]) => void){
+    this._http.post<ProductModel[]>("products/getAllForHomePage", model, res => callBack(res)); // link mgiht be become /update.
+  }
+
+
 }

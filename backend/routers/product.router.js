@@ -149,4 +149,44 @@ router.post("/removeImageByProductIdAndIndex", async (req, res) => {
     });
 });
 
+//Let's getting product list for the home page
+router.post("/getAllForHomePage", async(req, res) => {
+    response(res, async() => {
+        const {pageNumber, pageSize, search, categoryId, priceFilter} = req.body;
+        let products;
+        if(priceFilter == "0"){
+            products = await Product
+            .find({
+                isActive: true,
+                categories: {$regex: categoryId, $options: 'i'},
+                $or:[
+                    {
+                        name: {$regex: search, $options: 'i'}
+                    }
+                ]
+            })
+            .sort({name: 1})
+            .populate("categories");
+            //skip-limit pagination implement
+        }
+        else{
+            products = await Product
+            .find({
+                isActive: true,
+                categories: {$regex: categoryId, $options: 'i'},
+                $or:[
+                    {
+                        name: {$regex: search, $options: 'i'}
+                    }
+                ]
+            })
+            .sort({ price: Number(priceFilter) })
+            .populate("categories");
+            //skip-limit pagination implement
+        }
+
+        res.json(products);
+    });
+});
+
 module.exports = router; // Share product router.

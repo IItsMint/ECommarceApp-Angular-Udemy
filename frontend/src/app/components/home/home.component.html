@@ -3,11 +3,11 @@
         <!-- Left Sidebar for Category List -->
         <div class="col-md-2 outline">
             <ul>
-                <li (click)="changeCategory('Show All')" [ngClass]="request.categoryName == 'Show All' ? 'active': '' ">
+                <li (click)="changeCategory('','Show All')" [ngClass]="request.categoryName == 'Show All' ? 'active': '' ">
                     Show All
                 </li>
 
-                <li (click)="changeCategory(category.name)" [ngClass]="request.categoryName == category.name ? 'active': '' " *ngFor="let category of categories">
+                <li (click)="changeCategory(category._id,category.name)" [ngClass]="request.categoryName == category.name ? 'active': '' " *ngFor="let category of categories">
                     {{category.name}}
                 </li>
             </ul>
@@ -28,29 +28,29 @@
                         <select [(ngModel)]="request.priceFilter" class="form-control">
                             <option value="0">Sort By...</option>
                             <option value="1">Price: Low to High</option>
-                            <option value="2">Price: High to Low</option>
+                            <option value="-1">Price: High to Low</option>
                         </select>
                     </div>
                     <div class="col-md-1">
-                        <button class="btn btn-primary">
-                            All
+                        <button (click)="getAll()" class="btn btn-primary">
+                            Find
                         </button>
                     </div>
                 </div>
             </div>
 
             <div class="row mt-2">
-                <div class="col-md-4">
+                <div class="col-md-4" *ngFor="let product of products let i = index">
                     <div class="card text-center">
                         <div class="card-header">
-                            <h1>Tomatoes</h1>
+                            <h1>{{product.name}}</h1>
                         </div>
                         <div class="card-body">
-                            <img src="https://cdn.yemek.com/mnresize/1250/833/uploads/2023/06/domates-kac-kalori-shutter-4.jpg" alt="" width="300" height="200">
-                            <p class="mt-1"> <strong>Left:100</strong></p>
+                            <img [src]="'http://localhost:5001/' + product.imageUrls[0].path" alt="" width="150" height="150">
+                            <p class="mt-1"> <strong>Left:{{product.stock}}</strong></p>
                             <hr>
-                            <h4 class="alert alert-danger">Price: 100 ₺</h4>
-                            <button class="btn btn-outline-dark w-100 mt-2">Add to Shopping Cart</button>
+                            <h4 class="alert alert-danger">Price: {{product.price}} ₺</h4>
+                            <button *ngIf="product.stock > 0" class="btn btn-outline-dark w-100 mt-2">Add to Shopping Cart</button>
                         </div>
                     </div>
                 </div>
